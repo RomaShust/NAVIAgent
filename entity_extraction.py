@@ -32,7 +32,13 @@ def extract_entities(query: str, extraction_llm: ChatOpenAI) -> dict:
         "Infectious Disease, Radiology, Mammography, Endocrinology, Physiological Laboratory,"
         "Podiatrist, Ambulatory Surgical, Nurse Practitioner, Orthotist, Ambulance," 
         "Prosthetist, Public Health or Welfare, Voluntary or Charitable, Psychologist,"
-        "Audiologist, Physical Therapist, Rheumatology, Occupational Therapist, Psychologist/Clinical"
+        "Audiologist, Physical Therapist, Rheumatology, Occupational Therapist, Psychologist/Clinical,"
+        "Dietitian, Pain Medicine, Oncology, Surgery, Vascular Surgery, Addiction Medicine,"
+        "Critical Care Medicine, Hematology, Hematology & Oncology, Preventive Medicine,"
+        "Public Health & General Preventive Medicine, Oral & Maxillofacial Surgery, Psychiatry & Neurology,"
+        "Clinical Nurse Specialist, Medical Oncology, Surgical Oncology, Radiation Oncology,"
+        "Emergency Medicine, Vascular & Interventional Radiology, Optician, Obstetrics & Gynecology,"
+        "Gynecologic Oncology"
     )
 
     # ----------------------------------------------------------------
@@ -40,16 +46,16 @@ def extract_entities(query: str, extraction_llm: ChatOpenAI) -> dict:
     # ----------------------------------------------------------------
     system_msg = SystemMessage(
         content=(
-            "You are an assistant that extracts 3 fields from user text: location, state, and specialty.\n"
-            "1) Parse the user's query to identify location (city or ZIP), state, and specialty.\n"
-            "2) For specialty, map the user's request to the closest match from the following official list:\n\n"
-            f"{specialty_list}\n\n"
-            "For example, if the user says 'cardiologist', return 'Cardiology'; if they say 'ENT', "
-            "you might return 'Otolaryngology', etc.\n"
-            "If you cannot match the user’s request to any item in that list, use an empty string.\n\n"
-            "Return ONLY valid JSON in this format:\n"
-            '{"location":"...", "state":"...", "specialty":"..."}\n'
-            "No extra text, disclaimers, or keys. If an entity is missing, use an empty string."
+ "You are an assistant that extracts 3 fields from user text: location, state, and specialty.\n"
+ "1) Parse the user's query to identify location (city or ZIP), state, and specialty."
+ "The state should be ALWAYS abbreviated to two letters. \n"
+ "2) For specialty, map the user's request to the closest match from the following official list:\n\n"
+ f"{specialty_list}\n\n"
+ "For example, if the user says 'cardiologist', return 'Cardiology'; if they say 'eye doctor', "
+ "you might return 'Otolaryngology', etc.\n"
+ "Return ONLY valid JSON in this format:\n"
+ '{"location":"...", "state":"...", "specialty":"..."}\n'
+ "No extra text, disclaimers, or keys."
         )
     )
 
