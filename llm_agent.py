@@ -1,7 +1,7 @@
 # llm_agent.py
 
 import requests
-import langsmith
+import json
 from langchain.agents import Tool, initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import SystemMessage
@@ -112,7 +112,7 @@ def npi_tool_func(query: str, extraction_llm: ChatOpenAI) -> str:
     #debug_info = f"\n**DEBUG:** Search parameters used: location = '{location}', state = '{state}', specialty = '{specialty}'"
     #output += debug_info
         
-    return {"output": output}
+    return json.dumps({"output": output})
 
 
 def create_agent(openai_api_key: str, model_name: str = "gpt-4o", temperature: float = 0.0):
@@ -214,7 +214,6 @@ def create_agent(openai_api_key: str, model_name: str = "gpt-4o", temperature: f
         agent='conversational-react-description',
         memory=memory,
         verbose=True,
-        handle_parsing_errors=True,
         agent_kwargs={
                 "system_message": system_prompt
             }

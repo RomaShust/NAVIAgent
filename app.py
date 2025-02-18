@@ -1,6 +1,7 @@
 # app.py
 
 import os
+import json
 import streamlit as st
 from dotenv import load_dotenv
 from llm_agent import create_agent
@@ -18,7 +19,7 @@ if "agent" not in st.session_state:
     )
 agent = st.session_state.agent
 
-st.title("Physician Finder Chat Agent")
+st.title("Physician Finder Chat Agent Feb 18 2025")
 st.write("""
 **Welcome!** Ask for a physician by specifying your needs.
 For example: "I need a cardiologist in LA, California"
@@ -58,7 +59,12 @@ if user_input:
 
     with st.spinner("Processing..."):
         response = agent.invoke(user_input)
-
+        try:
+            parsed = json.loads(response)
+            display_response = parsed.get("output", response)
+        except Exception:
+            display_response = str(response)
+            
         # Same logic: if it's a dict with 'output', use that; else raw string
         if isinstance(response, dict) and "output" in response:
             display_response = response["output"]
