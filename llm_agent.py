@@ -2,7 +2,7 @@
 
 import requests
 import json
-from langchain.agents import Tool, initialize_agent, AgentType
+from langchain.agents import Tool, initialize_agent
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import SystemMessage
 from entity_extraction import extract_entities
