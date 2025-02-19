@@ -214,6 +214,7 @@ def create_agent(openai_api_key: str, model_name: str = "gpt-4o", temperature: f
         agent='conversational-react-description',
         memory=memory,
         verbose=True,
+        handle_parsing_errors=True,
         agent_kwargs={
                 "system_message": system_prompt
             }
